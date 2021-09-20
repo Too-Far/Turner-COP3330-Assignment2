@@ -4,32 +4,80 @@ package ex25;
  *  UCF COP3330 Fall 2021 Assignment 2 Solution
  *  Copyright 2021 Ryan Turner
  */
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 public class App
 {
-    public static void main( String[] args )
+    public static void createOutput(int score, String password) {
+        switch (score) {
+            case 0:
+                System.out.println("The password " + password + " is very weak.");
+                break;
+            case 1:
+                System.out.println("The password " + password + " is a weak password.");
+                break;
+            case 2:
+                System.out.println("The password " + password + " is a strong password.");
+                break;
+            case 3:
+                System.out.println("The password " + password + " is a very strong password.");
+        }
+    }
+
+    public static int passwordValidator(String password) {
+        Pattern numberPattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+        Pattern charPattern = Pattern.compile("^[a-zA-Z]*$");
+        Pattern charAndNum = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+$");
+        Pattern withSpecial = Pattern.compile("^(?=.*[A-Za-z])(?=.*[!@#$%&*()_+=|<>?{}\\[\\]~-])(?=.*[0-9])[A-Za-z0-9!@#$%&*()_+=|<>?{}\\[\\]~-]+$");
+
+
+        if (password.length() < 8 && numberPattern.matcher(password).matches()) {
+            return 0;
+        }
+        if (password.length() < 8 && charPattern.matcher(password).matches()) {
+            return 1;
+        }
+        if (password.length() < 8) {
+            if (charPattern.matcher(password).matches()) {
+                return 1;
+            } else if (charAndNum.matcher(password).matches()) {
+                return 1;
+            }
+        }
+        if (withSpecial.matcher(password).matches()) {
+            if (password.length() >= 8) {
+                return 3;
+            }
+        }
+
+        if (password.length() >= 8) {
+            if (charAndNum.matcher(password).matches()) {
+                {
+                    return 2;
+                }
+            }
+         }
+
+        return 0;
+    }
+
+    public static String getPassword() throws IOException {
+        String password;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Please enter your desired password: ");
+        password = reader.readLine();
+        return password;
+    }
+
+    public static void main( String[] args ) throws IOException
     {
-        System.out.println( "Hello World!" );
+        String password;
+        password = getPassword();
+        int passwordScore = passwordValidator(password);
+        createOutput(passwordScore, password);
     }
 }
-
-/*
-*Exercise 25 - Password Strength Indicator
-Functions help you abstract away complex operations, but they also help you build reusable components.
-
-Create a program that determines the complexity of a given password based on these rules:
-
-A very weak password contains only numbers and is fewer than eight characters.
-A weak password contains only letters and is fewer than eight characters.
-A strong password contains letters and at least one number and is at least eight characters.
-A very strong password contains letters, numbers, and special characters and is at least eight characters.
-Example Output
-The password '12345' is a very weak password.
-The password 'abcdef' is a weak password.
-The password 'abc123xyz' is a strong password.
-The password '1337h@xor!' is a very strong password.
-Constraints
-Create a passwordValidator function that takes in the password as its argument and returns a value you can evaluate to determine the password strength. Do not have the function return a string—you may need to support multiple languages in the future.
-Use a single output statement.
- */
