@@ -32,7 +32,7 @@ public class App
                     calcReturn(rate);
                     flag = false;
                 } else {
-                    System.out.println("Sorry that's not a valid input.");
+                    System.out.println("You cannot use zero as a rate of return!");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Sorry that's not a valid input");
