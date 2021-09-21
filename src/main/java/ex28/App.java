@@ -30,6 +30,7 @@ public class App
         System.out.println("How many numbers would you like to add?");
         numOfNumbers = Integer.parseInt(reader.readLine());
 
+        // Init array
         numbers = new int[numOfNumbers];
         
         for (int i = 0; i < numOfNumbers; i++) {
