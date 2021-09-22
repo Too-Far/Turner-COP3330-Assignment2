@@ -23,7 +23,7 @@ public class App
 
     public static void collectNames() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        final List<String> names = new ArrayList<String>();
+        final List<String> names = new ArrayList<>();
         String name;
         boolean flag = true;
         while (flag) {
@@ -36,7 +36,7 @@ public class App
                 pickWinnerAndDisplay(names, names.size());
             }
         }
-    };
+    }
 
     public static void main( String[] args ) throws IOException
     {
