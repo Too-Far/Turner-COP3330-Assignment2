@@ -18,7 +18,7 @@ public class App
     public static void pickWinnerAndDisplay(List<String> names, int size) {
         Random rand = new Random();
         int randomIndex = rand.nextInt(size);
-        System.out.println("The winner is.... " + names.get(randomIndex));
+        System.out.println("The winner is... " + names.get(randomIndex));
     }
 
     public static void collectNames() throws IOException {
